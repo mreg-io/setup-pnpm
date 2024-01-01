@@ -1,0 +1,50 @@
+name: Setup pnpm
+description: Setup a Node.js and pnpm environemnt and configure cache for downloaded packages.
+author: My Registry
+inputs:
+  always-auth:
+    description: 'Set always-auth in npmrc.'
+    default: 'false'
+  node-version:
+    description: 'Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.'
+  node-version-file:
+    description: 'File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions.'
+  architecture:
+    description: 'Target architecture for Node to use. Examples: x86, x64. Will use system architecture by default.'
+  check-latest:
+    description: 'Set this option if you want the action to check for the latest available version that satisfies the version spec.'
+    default: "false"
+  registry-url:
+    description: 'Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.'
+  scope:
+    description: 'Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).'
+  pnpm-version:
+    description: Version of pnpm to install
+    required: false
+  pmpm-dest:
+    description: Where to store pnpm files
+    required: false
+    default: ~/setup-pnpm
+runs:
+  using: composite
+  steps:
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: ${{ inputs.pnpm-version }}
+        dest: ${{ inputs.pmpm-dest }}
+        run_install: false
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        always-auth: ${{ inputs.always-auth }}
+        node-version: ${{ inputs.node-version }}
+        node-version-file: ${{ inputs.node-version-file }}
+        architecture: ${{ inputs.architecture }}
+        check-latest: ${{ inputs.check-latest }}
+        registry-url: ${{ inputs.registry-url }}
+        scope: ${{ inputs. scope }}
+        cache: 'pnpm'
+    - name: Install dependencies
+      run: pnpm install
+      shell: bash
