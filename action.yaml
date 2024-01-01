@@ -1,6 +1,7 @@
-name: Setup pnpm
+name: Setup pnpm with cache support
 description: Setup a Node.js and pnpm environemnt and configure cache for downloaded packages.
 author: My Registry
+
 inputs:
   always-auth:
     description: 'Set always-auth in npmrc.'
@@ -48,3 +49,7 @@ runs:
     - name: Install dependencies
       run: pnpm install
       shell: bash
+
+branding:
+  icon: package
+  color: orange
