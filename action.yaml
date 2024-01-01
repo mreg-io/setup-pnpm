@@ -8,6 +8,7 @@ inputs:
     default: 'false'
   node-version:
     description: 'Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.'
+    default: 'latest'
   node-version-file:
     description: 'File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions.'
   architecture:
@@ -24,6 +25,7 @@ inputs:
   pnpm-version:
     description: Version of pnpm to install
     required: false
+    default: 'latest'
   pmpm-dest:
     description: Where to store pnpm files
     required: false
