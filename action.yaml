@@ -19,6 +19,8 @@ inputs:
     description: 'Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.'
   scope:
     description: 'Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).'
+  cache-dependency-path:
+    description: 'Used to specify the path to a dependency file: pnpm-lock.yaml, etc. Supports wildcards or a list of file names for caching multiple dependencies.'
   pnpm-version:
     description: Version of pnpm to install
     required: false
@@ -46,6 +48,7 @@ runs:
         registry-url: ${{ inputs.registry-url }}
         scope: ${{ inputs. scope }}
         cache: 'pnpm'
+        cache-dependency-path: ${{ inputs.cache-dependency-path }}
     - name: Install dependencies
       run: pnpm install
       shell: bash
